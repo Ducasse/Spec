@@ -41,10 +41,12 @@ SpListPresenter class >> title [
 
 { #category : 'private' }
 SpListPresenter >> clickOnSelectedItem [
-
 	| item |
+
 	item := self selection selectedItem.
-	^ item notNil and: [ (item respondsTo: #click) and: [ item click ] ]
+	^ item isNotNil 
+		and: [ (item respondsTo: #click) 
+		and: [ item click ] ]
 ]
 
 { #category : 'api' }
@@ -112,7 +114,7 @@ SpListPresenter >> hasHeaderTitle [
 SpListPresenter >> hasIcons [
 	"Answer true if the list has an icon provider (See `SpListPresenter>>#icons:`)."
 
-	^ self displayIcon notNil
+	^ self displayIcon isNotNil
 ]
 
 { #category : 'api' }
@@ -177,13 +179,6 @@ SpListPresenter >> registerEvents [
 { #category : 'private' }
 SpListPresenter >> resetListSelection [
 	self selectIndex: 0
-]
-
-{ #category : 'TOREMOVE' }
-SpListPresenter >> resetSortingBlock [
-	"Reset the sortering block with the default value which consists in not sorting"
-
-	self model sortingBlock: nil
 ]
 
 { #category : 'api' }
