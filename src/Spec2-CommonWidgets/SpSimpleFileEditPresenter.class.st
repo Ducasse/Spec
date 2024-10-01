@@ -60,7 +60,7 @@ SpSimpleFileEditPresenter >> defaultLayout [
 	  	add: (SpBoxLayout newLeftToRight
 				add: label expand: true;
 				yourself)
-	  		height: self calculateLabelHeight;
+	  	expand: false;
 		add: codeText expand: true;
 		yourself
 ]
@@ -107,7 +107,7 @@ SpSimpleFileEditPresenter >> onFileReference: aFileReference [
 
 	fileReference := aFileReference. 
 	codeText text: aFileReference contents.
-	label label: 'File: ...',  (aFileReference fullName last: 45)
+	label label: 'File: ...',  (aFileReference fullName last: (45 min: aFileReference fullName size))
 ]
 
 { #category : 'layout' }
