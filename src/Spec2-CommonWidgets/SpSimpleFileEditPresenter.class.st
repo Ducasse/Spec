@@ -97,9 +97,9 @@ SpSimpleFileEditPresenter >> label [
 ]
 
 { #category : 'accessing' }
-SpSimpleFileEditPresenter >> label: anObject [
+SpSimpleFileEditPresenter >> label: aString [
 
-	label := anObject
+	label label: aString
 ]
 
 { #category : 'layout' }
