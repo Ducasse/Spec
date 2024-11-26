@@ -1,6 +1,9 @@
+"
+This command is use when the contents of an input field should be ""accepted""/saved.
+"
 Class {
 	#name : 'SpAcceptChangesCommand',
-	#superclass : 'StToolCommand',
+	#superclass : 'SpToolCommand',
 	#category : 'Spec2-Commands-Code',
 	#package : 'Spec2-Commands',
 	#tag : 'Code'
