@@ -3,45 +3,45 @@ I'm an ""inspect it"" command.
 I will execute the selection (or line) of the playground and inspect the result.
 "
 Class {
-	#name : 'SpCodeInspectItCommand',
-	#superclass : 'SpCodeSelectionCommand',
+	#name : 'StCodeInspectItCommand',
+	#superclass : 'StCodeSelectionCommand',
 	#category : 'Spec2-Code-Commands-Base',
 	#package : 'Spec2-Code-Commands',
 	#tag : 'Base'
 }
 
 { #category : 'accessing' }
-SpCodeInspectItCommand class >> defaultDescription [
+StCodeInspectItCommand class >> defaultDescription [
 
 	^ 'Evaluate selection and inspect the result.'
 ]
 
 { #category : 'defaults' }
-SpCodeInspectItCommand class >> defaultIconName [
+StCodeInspectItCommand class >> defaultIconName [
 
 	^ #smallInspectIt
 ]
 
 { #category : 'default' }
-SpCodeInspectItCommand class >> defaultName [
+StCodeInspectItCommand class >> defaultName [
 
 	^ 'Inspect it'
 ]
 
 { #category : 'default' }
-SpCodeInspectItCommand class >> defaultShortcutKey [
+StCodeInspectItCommand class >> defaultShortcutKey [
 
 	^ $i actionModifier
 ]
 
 { #category : 'documentation' }
-SpCodeInspectItCommand class >> documentContextRequiredSelectors [
+StCodeInspectItCommand class >> documentContextRequiredSelectors [
 
 	^ super documentContextRequiredSelectors, #(systemNavigation)
 ]
 
 { #category : 'execution' }
-SpCodeInspectItCommand >> execute [
+StCodeInspectItCommand >> execute [
 	"Treat the current text selection as an expression; evaluate it."
 	
 	self evaluateSelectionAndDo: [ :result | 
@@ -49,7 +49,7 @@ SpCodeInspectItCommand >> execute [
 ]
 
 { #category : 'private - actions' }
-SpCodeInspectItCommand >> inspectObject: anObject [
+StCodeInspectItCommand >> inspectObject: anObject [
 
 	self context systemNavigation inspect: anObject
 ]

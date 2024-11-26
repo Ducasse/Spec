@@ -3,45 +3,45 @@ I'm a ""do it"" command.
 I will execute the selection (or line) of the playground.
 "
 Class {
-	#name : 'SpCodeDoItCommand',
-	#superclass : 'SpCodeSelectionCommand',
+	#name : 'StCodeDoItCommand',
+	#superclass : 'StCodeSelectionCommand',
 	#category : 'Spec2-Code-Commands-Base',
 	#package : 'Spec2-Code-Commands',
 	#tag : 'Base'
 }
 
 { #category : 'accessing' }
-SpCodeDoItCommand class >> defaultDescription [ 
+StCodeDoItCommand class >> defaultDescription [ 
 
 	^ 'Evaluate selection.'
 ]
 
 { #category : 'default' }
-SpCodeDoItCommand class >> defaultIconName [
+StCodeDoItCommand class >> defaultIconName [
 
 	^ #smallDoIt
 ]
 
 { #category : 'default' }
-SpCodeDoItCommand class >> defaultName [
+StCodeDoItCommand class >> defaultName [
 
 	^ 'Do it'
 ]
 
 { #category : 'default' }
-SpCodeDoItCommand class >> defaultShortcutKey [
+StCodeDoItCommand class >> defaultShortcutKey [
 
 	^ $d actionModifier
 ]
 
 { #category : 'accessing' }
-SpCodeDoItCommand class >> order [
+StCodeDoItCommand class >> order [
 
 	^ 10
 ]
 
 { #category : 'execution' }
-SpCodeDoItCommand >> execute [
+StCodeDoItCommand >> execute [
 	"Treat the current text selection as an expression; evaluate it."
 	
 	self evaluateSelectionAndDo: [ :result | ]

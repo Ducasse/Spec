@@ -3,39 +3,39 @@ I'm a ""debug it"" command.
 I will debug the selection (or line) of the playground.
 "
 Class {
-	#name : 'SpCodeDebugItCommand',
-	#superclass : 'SpCodeSelectionCommand',
+	#name : 'StCodeDebugItCommand',
+	#superclass : 'StCodeSelectionCommand',
 	#category : 'Spec2-Code-Commands-Base',
 	#package : 'Spec2-Code-Commands',
 	#tag : 'Base'
 }
 
 { #category : 'accessing' }
-SpCodeDebugItCommand class >> defaultDescription [
+StCodeDebugItCommand class >> defaultDescription [
 
 	^ 'Debug selection.'
 ]
 
 { #category : 'default' }
-SpCodeDebugItCommand class >> defaultIconName [
+StCodeDebugItCommand class >> defaultIconName [
 
 	^ #smallDebug
 ]
 
 { #category : 'default' }
-SpCodeDebugItCommand class >> defaultName [ 
+StCodeDebugItCommand class >> defaultName [ 
 
 	^ 'Debug it'
 ]
 
 { #category : 'default' }
-SpCodeDebugItCommand class >> defaultShortcutKey [
+StCodeDebugItCommand class >> defaultShortcutKey [
 
 	^ $d shift actionModifier
 ]
 
 { #category : 'private' }
-SpCodeDebugItCommand >> debug: aStream [
+StCodeDebugItCommand >> debug: aStream [
 
 	| method doItReceiver doItContext |
 	doItReceiver := self context doItReceiver.
@@ -47,7 +47,7 @@ SpCodeDebugItCommand >> debug: aStream [
 ]
 
 { #category : 'private' }
-SpCodeDebugItCommand >> debug: aCompiledMethod receiver: anObject in: evalContext [
+StCodeDebugItCommand >> debug: aCompiledMethod receiver: anObject in: evalContext [
 	| process suspendedContext debugRequest |
 
 	process := [ 
@@ -69,7 +69,7 @@ SpCodeDebugItCommand >> debug: aCompiledMethod receiver: anObject in: evalContex
 ]
 
 { #category : 'execution' }
-SpCodeDebugItCommand >> execute [
+StCodeDebugItCommand >> execute [
 	| selection |
 
 	selection := self selectedTextOrLine.

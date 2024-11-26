@@ -2,26 +2,26 @@
 Browse all implementors of the selector found in context.
 "
 Class {
-	#name : 'SpBrowseImplementorsCommand',
-	#superclass : 'SpSystemSelectionCommand',
+	#name : 'StBrowseImplementorsCommand',
+	#superclass : 'StSystemSelectionCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseImplementorsCommand class >> defaultDescription [
+StBrowseImplementorsCommand class >> defaultDescription [
 	^ 'Browse all implementors of the selected method or message'
 ]
 
 { #category : 'accessing' }
-SpBrowseImplementorsCommand class >> defaultName [
+StBrowseImplementorsCommand class >> defaultName [
 
 	^ 'Implementors of it'
 ]
 
 { #category : 'default' }
-SpBrowseImplementorsCommand class >> defaultShortcutKey [
+StBrowseImplementorsCommand class >> defaultShortcutKey [
 
 	^ $m command mac 
 		| $m control win
@@ -29,13 +29,13 @@ SpBrowseImplementorsCommand class >> defaultShortcutKey [
 ]
 
 { #category : 'default' }
-SpBrowseImplementorsCommand class >> shortName [
+StBrowseImplementorsCommand class >> shortName [
 
 	^ 'implementors'
 ]
 
 { #category : 'executing' }
-SpBrowseImplementorsCommand >> execute [
+StBrowseImplementorsCommand >> execute [
 
 	self context doBrowseImplementors
 ]

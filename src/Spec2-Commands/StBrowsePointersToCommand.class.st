@@ -2,25 +2,25 @@
 I inspect all pointers to the object returned by the evaluation of my context
 "
 Class {
-	#name : 'SpBrowsePointersToCommand',
-	#superclass : 'SpSystemDiscoveryCommand',
+	#name : 'StBrowsePointersToCommand',
+	#superclass : 'StSystemDiscoveryCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowsePointersToCommand class >> defaultDescription [
+StBrowsePointersToCommand class >> defaultDescription [
 	^ 'Browse all objects referencing the selected object'
 ]
 
 { #category : 'default' }
-SpBrowsePointersToCommand class >> shortName [
+StBrowsePointersToCommand class >> shortName [
 
 	^ 'pointers to'
 ]
 
 { #category : 'executing' }
-SpBrowsePointersToCommand >> execute [
+StBrowsePointersToCommand >> execute [
 	self target selectedItem value pointersTo inspect
 ]

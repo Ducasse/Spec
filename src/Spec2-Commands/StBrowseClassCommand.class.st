@@ -3,8 +3,8 @@ I browse a class that is returned from the evaluation of my context.
 My context must be a block that returns a class.
 "
 Class {
-	#name : 'SpBrowseClassCommand',
-	#superclass : 'SpSystemSelectionCommand',
+	#name : 'StBrowseClassCommand',
+	#superclass : 'StSystemSelectionCommand',
 	#instVars : [
 		'selector'
 	],
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : 'default' }
-SpBrowseClassCommand class >> defaultDescription [
+StBrowseClassCommand class >> defaultDescription [
 	^ 'Browse the selected class'
 ]
 
 { #category : 'default' }
-SpBrowseClassCommand class >> defaultShortcutKey [
+StBrowseClassCommand class >> defaultShortcutKey [
 
 	^ $b command mac 
 		| $b control win
@@ -27,25 +27,25 @@ SpBrowseClassCommand class >> defaultShortcutKey [
 ]
 
 { #category : 'default' }
-SpBrowseClassCommand class >> shortName [
+StBrowseClassCommand class >> shortName [
 
 	^ 'full class'
 ]
 
 { #category : 'execution' }
-SpBrowseClassCommand >> execute [
+StBrowseClassCommand >> execute [
 
 	self context perform: self selector
 ]
 
 { #category : 'accessing' }
-SpBrowseClassCommand >> selector [
+StBrowseClassCommand >> selector [
 
 	^ selector ifNil: [ #doBrowseClass ]
 ]
 
 { #category : 'accessing' }
-SpBrowseClassCommand >> selector: aSelector [
+StBrowseClassCommand >> selector: aSelector [
 
 	selector := aSelector
 ]

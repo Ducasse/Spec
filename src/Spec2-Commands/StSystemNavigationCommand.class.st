@@ -5,7 +5,7 @@ I give a selector from a context that must:
 - evaluate to a string or symbol
 "
 Class {
-	#name : 'SpSystemNavigationCommand',
+	#name : 'StSystemNavigationCommand',
 	#superclass : 'StToolCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
@@ -13,17 +13,17 @@ Class {
 }
 
 { #category : 'default' }
-SpSystemNavigationCommand class >> defaultIconName [
+StSystemNavigationCommand class >> defaultIconName [
 	^#smallSystemBrowser 
 ]
 
 { #category : 'default' }
-SpSystemNavigationCommand class >> defaultName [
+StSystemNavigationCommand class >> defaultName [
 	^'Browse ', self shortName 
 ]
 
 { #category : 'documentation' }
-SpSystemNavigationCommand class >> documentContextRequiredSelectors [
+StSystemNavigationCommand class >> documentContextRequiredSelectors [
 	"Using a String and not a Symbol because `RBBrowserEnvironmentTest>>#testMatches` fails 
 	 if answering a symbol (because it detects the referenced selector)"
 
@@ -31,24 +31,24 @@ SpSystemNavigationCommand class >> documentContextRequiredSelectors [
 ]
 
 { #category : 'default' }
-SpSystemNavigationCommand class >> shortName [
+StSystemNavigationCommand class >> shortName [
 	^self subclassResponsibility 
 ]
 
 { #category : 'accessing' }
-SpSystemNavigationCommand >> environment [
+StSystemNavigationCommand >> environment [
 
 	^ self context environment
 ]
 
 { #category : 'accessing' }
-SpSystemNavigationCommand >> selector [
+StSystemNavigationCommand >> selector [
 
 	^ self target trimBoth asSymbol
 ]
 
 { #category : 'accessing' }
-SpSystemNavigationCommand >> systemNavigation [
+StSystemNavigationCommand >> systemNavigation [
 
 	^ self context systemNavigation
 		environment: self environment;

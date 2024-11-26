@@ -1,6 +1,9 @@
+"
+This command is use when a cancel action occurs (for example with cmd - l).
+"
 Class {
 	#name : 'SpCancelChangesCommand',
-	#superclass : 'StToolCommand',
+	#superclass : 'SpToolCommand',
 	#category : 'Spec2-Commands-Code',
 	#package : 'Spec2-Commands',
 	#tag : 'Code'

@@ -2,27 +2,27 @@
 I browse all references to the computed context that is transformed to a symbol.
 "
 Class {
-	#name : 'SpBrowseMethodReferencesCommand',
-	#superclass : 'SpSystemSelectionCommand',
+	#name : 'StBrowseMethodReferencesCommand',
+	#superclass : 'StSystemSelectionCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseMethodReferencesCommand class >> defaultDescription [
+StBrowseMethodReferencesCommand class >> defaultDescription [
 
 	^ 'Browse all references to the selected method or selector'
 ]
 
 { #category : 'default' }
-SpBrowseMethodReferencesCommand class >> defaultName [ 
+StBrowseMethodReferencesCommand class >> defaultName [ 
 
 	^ 'References to it'
 ]
 
 { #category : 'default' }
-SpBrowseMethodReferencesCommand class >> defaultShortcutKey [
+StBrowseMethodReferencesCommand class >> defaultShortcutKey [
 
 	^ $n command shift mac 
 		| $n control shift win
@@ -30,13 +30,13 @@ SpBrowseMethodReferencesCommand class >> defaultShortcutKey [
 ]
 
 { #category : 'default' }
-SpBrowseMethodReferencesCommand class >> shortName [
+StBrowseMethodReferencesCommand class >> shortName [
 
 	^ 'references'
 ]
 
 { #category : 'executing' }
-SpBrowseMethodReferencesCommand >> execute [
+StBrowseMethodReferencesCommand >> execute [
 
 	self context doBrowseMethodReferences
 ]

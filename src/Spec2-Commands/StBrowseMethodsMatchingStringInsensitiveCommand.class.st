@@ -2,27 +2,27 @@
 Browse all methods matching the selected string (case-insensitive).
 "
 Class {
-	#name : 'SpBrowseMethodsMatchingStringInsensitiveCommand',
-	#superclass : 'SpSystemSelectionCommand',
+	#name : 'StBrowseMethodsMatchingStringInsensitiveCommand',
+	#superclass : 'StSystemSelectionCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseMethodsMatchingStringInsensitiveCommand class >> defaultDescription [
+StBrowseMethodsMatchingStringInsensitiveCommand class >> defaultDescription [
 
 	^ 'Browse all methods containing a string matchign the selected string (case-sensitive)'
 ]
 
 { #category : 'default' }
-SpBrowseMethodsMatchingStringInsensitiveCommand class >> defaultName [
+StBrowseMethodsMatchingStringInsensitiveCommand class >> defaultName [
 
 	^ 'Case insensitive method literal strings with it'
 ]
 
 { #category : 'defaults' }
-SpBrowseMethodsMatchingStringInsensitiveCommand class >> defaultShortcutKey [
+StBrowseMethodsMatchingStringInsensitiveCommand class >> defaultShortcutKey [
 
 	^ $e command shift mac
 		| $e control shift win
@@ -30,13 +30,13 @@ SpBrowseMethodsMatchingStringInsensitiveCommand class >> defaultShortcutKey [
 ]
 
 { #category : 'default' }
-SpBrowseMethodsMatchingStringInsensitiveCommand class >> shortName [
+StBrowseMethodsMatchingStringInsensitiveCommand class >> shortName [
 
 	^ nil "Do not use"
 ]
 
 { #category : 'executing' }
-SpBrowseMethodsMatchingStringInsensitiveCommand >> execute [
+StBrowseMethodsMatchingStringInsensitiveCommand >> execute [
 
 	self context doBrowseMethodsMatchingStringInsensitive
 ]

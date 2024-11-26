@@ -73,13 +73,13 @@ SpCodePresenter class >> codeNavigationCommandsGroupWith: aPresenter [
 		
 	self flag: #TODO. "This looks like a very bad way to do this :P"	
 	{ 
-		SpBrowseClassCommand.		
-		SpBrowseImplementorsCommand.
-		SpBrowseSendersCommand.
-		SpBrowseMethodReferencesCommand.	
-		SpBrowseMethodsMatchingStringInsensitiveCommand.
-		SpBrowseMethodsMatchingStringSensitiveCommand.
-		SpBrowseMethodsContainingStringCommand.
+		StBrowseClassCommand.		
+		StBrowseImplementorsCommand.
+		StBrowseSendersCommand.
+		StBrowseMethodReferencesCommand.	
+		StBrowseMethodsMatchingStringInsensitiveCommand.
+		StBrowseMethodsMatchingStringSensitiveCommand.
+		StBrowseMethodsContainingStringCommand.
 	 } 
 	do:[ :commandClass | 
 		group register: (commandClass forSpecContext: aPresenter) ].
@@ -96,7 +96,7 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 		description: 'Actions on code selection.';
 		beDisplayedAsGroup.
 	
-	SpCodeSelectionCommand allOrdered 
+	StCodeSelectionCommand allOrdered 
 		do: [ :cmdClass | group register: (cmdClass forSpecContext: presenter) ].
 	
 	^ group

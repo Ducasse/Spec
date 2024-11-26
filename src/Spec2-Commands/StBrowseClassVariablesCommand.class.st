@@ -2,26 +2,26 @@
 My context is a class, I browse the class variables of that class.
 "
 Class {
-	#name : 'SpBrowseClassVariablesCommand',
-	#superclass : 'SpSystemNavigationCommand',
+	#name : 'StBrowseClassVariablesCommand',
+	#superclass : 'StSystemNavigationCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseClassVariablesCommand class >> defaultDescription [
+StBrowseClassVariablesCommand class >> defaultDescription [
 	^ 'Browse the class variables'
 ]
 
 { #category : 'default' }
-SpBrowseClassVariablesCommand class >> shortName [
+StBrowseClassVariablesCommand class >> shortName [
 
 	^ 'class variables'
 ]
 
 { #category : 'executing' }
-SpBrowseClassVariablesCommand >> execute [
+StBrowseClassVariablesCommand >> execute [
 
 	self systemNavigation browseClassVariables: self target
 ]

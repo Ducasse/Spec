@@ -10,7 +10,7 @@ In case no text is selected, the commands will take the text from cursor positio
 - doItContext
 "
 Class {
-	#name : 'SpCodeSelectionCommand',
+	#name : 'StCodeSelectionCommand',
 	#superclass : 'StToolCommand',
 	#category : 'Spec2-Code-Commands-Base',
 	#package : 'Spec2-Code-Commands',
@@ -18,31 +18,31 @@ Class {
 }
 
 { #category : 'accessing' }
-SpCodeSelectionCommand class >> allOrdered [
+StCodeSelectionCommand class >> allOrdered [
 
 	^ self allSubclasses sorted: #order ascending
 ]
 
 { #category : 'documentation' }
-SpCodeSelectionCommand class >> documentContextRequiredSelectors [
+StCodeSelectionCommand class >> documentContextRequiredSelectors [
 
 	^ super documentContextRequiredSelectors, #(selectedTextOrLine)
 ]
 
 { #category : 'accessing' }
-SpCodeSelectionCommand class >> order [
+StCodeSelectionCommand class >> order [
 	"At last by default"
 	^ 999
 ]
 
 { #category : 'converting' }
-SpCodeSelectionCommand >> asSpecCommand [
+StCodeSelectionCommand >> asSpecCommand [
 
 	^ SpToolCurrentApplicationCommand decorate: super asSpecCommand
 ]
 
 { #category : 'private' }
-SpCodeSelectionCommand >> compile: aStream for: anObject in: evalContext [
+StCodeSelectionCommand >> compile: aStream for: anObject in: evalContext [
 
 	| methodClass |
 	methodClass := evalContext
@@ -60,7 +60,7 @@ SpCodeSelectionCommand >> compile: aStream for: anObject in: evalContext [
 ]
 
 { #category : 'private' }
-SpCodeSelectionCommand >> evaluate: aString andDo: aBlock [
+StCodeSelectionCommand >> evaluate: aString andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke 
 	 aBlock with the result."
 
@@ -71,7 +71,7 @@ SpCodeSelectionCommand >> evaluate: aString andDo: aBlock [
 ]
 
 { #category : 'private' }
-SpCodeSelectionCommand >> evaluateSelectionAndDo: aBlock [
+StCodeSelectionCommand >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
 	| selection |
@@ -85,7 +85,7 @@ SpCodeSelectionCommand >> evaluateSelectionAndDo: aBlock [
 ]
 
 { #category : 'accessing' }
-SpCodeSelectionCommand >> selectedTextOrLine [
+StCodeSelectionCommand >> selectedTextOrLine [
 
 	^ self context selectedTextOrLine
 ]

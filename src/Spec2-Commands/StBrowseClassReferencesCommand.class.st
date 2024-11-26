@@ -2,26 +2,26 @@
 Browse all references to the class returned by the evaluation of the context.
 "
 Class {
-	#name : 'SpBrowseClassReferencesCommand',
-	#superclass : 'SpSystemSelectionCommand',
+	#name : 'StBrowseClassReferencesCommand',
+	#superclass : 'StSystemSelectionCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseClassReferencesCommand class >> defaultDescription [
+StBrowseClassReferencesCommand class >> defaultDescription [
 	^ 'Browse all references to the receiver''s class'
 ]
 
 { #category : 'default' }
-SpBrowseClassReferencesCommand class >> shortName [
+StBrowseClassReferencesCommand class >> shortName [
 
 	^ 'class references'
 ]
 
 { #category : 'execution' }
-SpBrowseClassReferencesCommand >> execute [
+StBrowseClassReferencesCommand >> execute [
 
 	self context doBrowseClassReferences
 ]

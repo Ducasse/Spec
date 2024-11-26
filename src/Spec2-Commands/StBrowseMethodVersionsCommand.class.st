@@ -2,26 +2,26 @@
 Create and schedule a message set browser on all versions of the method returned by the evaluation of the context.
 "
 Class {
-	#name : 'SpBrowseMethodVersionsCommand',
-	#superclass : 'SpSystemNavigationCommand',
+	#name : 'StBrowseMethodVersionsCommand',
+	#superclass : 'StSystemNavigationCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
 }
 
 { #category : 'default' }
-SpBrowseMethodVersionsCommand class >> defaultDescription [ 
+StBrowseMethodVersionsCommand class >> defaultDescription [ 
 	^'Browse history of the method' 
 ]
 
 { #category : 'default' }
-SpBrowseMethodVersionsCommand class >> shortName [
+StBrowseMethodVersionsCommand class >> shortName [
 
 	^ 'method versions'
 ]
 
 { #category : 'executing' }
-SpBrowseMethodVersionsCommand >> execute [
+StBrowseMethodVersionsCommand >> execute [
 	| target |
 
 	target := self target.
