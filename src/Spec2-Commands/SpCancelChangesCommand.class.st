@@ -1,6 +1,6 @@
 Class {
 	#name : 'SpCancelChangesCommand',
-	#superclass : 'SpToolCommand',
+	#superclass : 'StToolCommand',
 	#category : 'Spec2-Commands-Code',
 	#package : 'Spec2-Commands',
 	#tag : 'Code'

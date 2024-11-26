@@ -11,7 +11,7 @@ In case no text is selected, the commands will take the text from cursor positio
 "
 Class {
 	#name : 'SpCodeSelectionCommand',
-	#superclass : 'SpToolCommand',
+	#superclass : 'StToolCommand',
 	#category : 'Spec2-Code-Commands-Base',
 	#package : 'Spec2-Code-Commands',
 	#tag : 'Base'

@@ -6,7 +6,7 @@ I give a selector from a context that must:
 "
 Class {
 	#name : 'SpSystemNavigationCommand',
-	#superclass : 'SpToolCommand',
+	#superclass : 'StToolCommand',
 	#category : 'Spec2-Commands-Navigation',
 	#package : 'Spec2-Commands',
 	#tag : 'Navigation'
