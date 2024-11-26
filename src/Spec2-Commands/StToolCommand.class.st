@@ -5,3 +5,9 @@ Class {
 	#package : 'Spec2-Commands',
 	#tag : 'Presenters'
 }
+
+{ #category : 'accessing' }
+StToolCommand >> application [
+
+	^ self context application
+]

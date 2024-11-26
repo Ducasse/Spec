@@ -25,7 +25,7 @@ StBrowseMethodVersionsCommand >> execute [
 	| target |
 
 	target := self target.
-	Smalltalk tools versionBrowser
+	self application tools versionBrowser
 		browseVersionsForClass: target methodClass
 		selector: target selector
 ]
