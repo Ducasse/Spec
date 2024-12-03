@@ -11,7 +11,7 @@ SpEasyColumnViewPresenter class >> example [
 	"This example show the simples list view you can make: A list with a label"
 	
 	self new
-		application: (SpApplication new useBackend: #Gtk);
+		application: SpApplication new;
 		items: self environment allClasses;
 		addColumn: (SpStringTableColumn new 
 			title: 'Class';
@@ -44,6 +44,44 @@ SpEasyColumnViewPresenter class >> exampleActivateOnDoubleClick [
 		open
 ]
 
+{ #category : 'examples' }
+SpEasyColumnViewPresenter class >> exampleResizableColumns [
+	"This example show the simples list view you can make: A list with a label"
+	
+	self new
+		application: SpApplication new;
+		items: self environment allClasses;
+		beResizable;
+		addColumn: (SpStringTableColumn new 
+			title: 'Class';
+			evaluated: [ :each | each name ];
+			yourself);
+		addColumn: (SpStringTableColumn new 
+			title: 'Lines of code';
+			evaluated: [ :each | each linesOfCode ];
+			yourself);
+		open
+]
+
+{ #category : 'examples' }
+SpEasyColumnViewPresenter class >> exampleWithColumnWidth [
+	"This example show the simples list view you can make: A list with a label"
+	
+	self new
+		application: SpApplication new;
+		items: self environment allClasses;
+		addColumn: (SpStringTableColumn new 
+			title: 'Class';
+			evaluated: [ :each | each name ];
+			yourself);
+		addColumn: (SpStringTableColumn new 
+			title: 'Lines of code';
+			evaluated: [ :each | each linesOfCode ];
+			width: 50;
+			yourself);
+		open
+]
+
 { #category : 'api' }
 SpEasyColumnViewPresenter >> addColumn: aColumn [
 
@@ -62,7 +100,13 @@ SpEasyColumnViewPresenter >> beResizable [
 	contentView beResizable
 ]
 
-{ #category : 'accessing' }
+{ #category : 'simulation' }
+SpEasyColumnViewPresenter >> clickAtIndex: aNumber [
+
+	contentView clickAtIndex: aNumber
+]
+
+{ #category : 'api' }
 SpEasyColumnViewPresenter >> columns: aCollection [ 
 	
 	contentView columns: aCollection 
@@ -70,15 +114,27 @@ SpEasyColumnViewPresenter >> columns: aCollection [
 ]
 
 { #category : 'api' }
+SpEasyColumnViewPresenter >> contextMenu [
+	
+	^ contentView contextMenu
+]
+
+{ #category : 'api' }
 SpEasyColumnViewPresenter >> contextMenu: aBlock [ 
 	
-	self flag: #TODO. "ignored, as this is deprecated"
+	contentView contextMenu: aBlock
 ]
 
 { #category : 'private' }
 SpEasyColumnViewPresenter >> displayValueFor: aImage [
 	
 	^ contentView displayValueFor: aImage
+]
+
+{ #category : 'simulation' }
+SpEasyColumnViewPresenter >> doubleClickAtIndex: aNumber [
+
+	contentView doubleClickAtIndex: aNumber
 ]
 
 { #category : 'api' }
@@ -91,8 +147,7 @@ SpEasyColumnViewPresenter >> hideColumnHeaders [
 SpEasyColumnViewPresenter >> initializePresenters [
 
 	super initializePresenters.
-	contentView := self newColumnView.
-
+	contentView := self newColumnView
 ]
 
 { #category : 'testing' }
@@ -100,6 +155,12 @@ SpEasyColumnViewPresenter >> isShowingColumnHeaders [
 	"Answer true if the table is configured to show column headers."
 	
 	^ contentView isShowingColumnHeaders
+]
+
+{ #category : 'api - selection' }
+SpEasyColumnViewPresenter >> selectAll [
+
+	contentView selectAll
 ]
 
 { #category : 'api' }
@@ -114,6 +175,12 @@ SpEasyColumnViewPresenter >> unselectAll [
 	contentView unselectAll
 ]
 
+{ #category : 'api' }
+SpEasyColumnViewPresenter >> updateItemsKeepingSelection: aSequenceableCollection [
+
+	contentView updateItemsKeepingSelection: aSequenceableCollection
+]
+
 { #category : 'api - events' }
 SpEasyColumnViewPresenter >> whenIsResizableChangedDo: aBlock [
 	
@@ -121,13 +188,19 @@ SpEasyColumnViewPresenter >> whenIsResizableChangedDo: aBlock [
 
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'api - events' }
+SpEasyColumnViewPresenter >> whenMenuChangedDo: aBlock [ 
+	
+	contentView whenMenuChangedDo: aBlock
+]
+
+{ #category : 'api - events' }
 SpEasyColumnViewPresenter >> whenSelectedDo: aBlock [ 
 	
 	contentView whenSelectedDo: aBlock
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'api - events' }
 SpEasyColumnViewPresenter >> whenSelectedItemChangedDo: aBlock [ 
 	
 	contentView whenSelectedItemChangedDo: aBlock

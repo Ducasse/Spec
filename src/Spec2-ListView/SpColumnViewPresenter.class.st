@@ -1,6 +1,11 @@
+"
+A column view presenter displays tabular data. It replaces the old table presenter but is a lot more customisable, as, in opposition to the old implementation, it accepts any presenter as table cell.
+"
 Class {
 	#name : 'SpColumnViewPresenter',
 	#superclass : 'SpAbstractListPresenter',
+	#traits : 'SpTSearchable',
+	#classTraits : 'SpTSearchable classTrait',
 	#instVars : [
 		'#columns => ObservableSlot',
 		'#isResizable => ObservableSlot',
@@ -21,7 +26,6 @@ SpColumnViewPresenter class >> adapterName [
 SpColumnViewPresenter class >> example [
 	
 	^ self new
-		application: (SpApplication new useBackend: #Gtk);
 		addColumnTitle: 'Class' 
 			setup: [ :aPresenter | aPresenter newLabel ] 
 			bind: [ :aPresenter :aClass | aPresenter label: aClass name ];
@@ -33,7 +37,7 @@ SpColumnViewPresenter class >> example [
 SpColumnViewPresenter class >> exampleActivateOnDoubleClick [
 
 	^ self new
-		  application: (SpApplication new useBackend: #Gtk);
+		  application: SpApplication new;
 		  isActiveOnDoubleClick;
 		  addColumnTitle: 'Class'
 		  setup: [ :aPresenter | aPresenter newLabel ]
@@ -47,7 +51,7 @@ SpColumnViewPresenter class >> exampleActivateOnDoubleClick [
 SpColumnViewPresenter class >> exampleResizableColumns [
 	
 	^ self new
-		application: (SpApplication new useBackend: #Gtk);
+		application: SpApplication new;
 		beResizable;
 		items: Smalltalk allClasses;
 		addColumnTitle: 'Class' 
@@ -63,7 +67,7 @@ SpColumnViewPresenter class >> exampleResizableColumns [
 SpColumnViewPresenter class >> exampleWithIcons [
 	
 	^ self new
-		application: (SpApplication new useBackend: #Gtk);
+		application: SpApplication new;
 		addColumnTitle: 'Class' 
 			setup: [ :aPresenter |
 				| presenter |
@@ -153,7 +157,9 @@ SpColumnViewPresenter >> hideColumnHeaders [
 SpColumnViewPresenter >> initialize [
 
 	super initialize.
+	self initializeTSearchable.
 	self showColumnHeaders.
+	self beNotResizable.
 	columns := #()
 ]
 

@@ -43,6 +43,6 @@ StCodeDoItCommand class >> order [
 { #category : 'execution' }
 StCodeDoItCommand >> execute [
 	"Treat the current text selection as an expression; evaluate it."
-	
+
 	self evaluateSelectionAndDo: [ :result | ]
 ]
