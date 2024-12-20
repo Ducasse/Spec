@@ -271,25 +271,25 @@ SpAbstractPresenter >> forceUpdateSlot: aSymbol [
 { #category : 'testing' }
 SpAbstractPresenter >> hasAdapter [
 
-	^ adapter notNil
+	^ adapter isNotNil
 ]
 
 { #category : 'testing' }
 SpAbstractPresenter >> hasAnnouncer [
 
-	^ announcer notNil
+	^ announcer isNotNil
 ]
 
 { #category : 'testing' }
 SpAbstractPresenter >> hasEventHandler [
 
-	^ eventHandler notNil and: [ eventHandler hasEvents ]
+	^ eventHandler isNotNil and: [ eventHandler hasEvents ]
 ]
 
 { #category : 'testing' }
 SpAbstractPresenter >> hasOwner [
 
-	^ self owner notNil
+	^ self owner isNotNil
 ]
 
 { #category : 'testing' }
@@ -312,12 +312,12 @@ SpAbstractPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 	 Override this to set buttons other than the default (Ok, Cancel)."
 	
 	aDialogWindowPresenter
-		addButton: 'Ok' do: [ :presenter | 
-			presenter triggerOkAction.
-			presenter close ];
 		addButton: 'Cancel' do: [ :presenter | 
 			presenter triggerCancelAction.
-			presenter close ]	
+			presenter close ];
+		addDefaultButton: 'Ok' do: [ :presenter | 
+			presenter triggerOkAction.
+			presenter close ]
 ]
 
 { #category : 'initialization' }
@@ -518,9 +518,7 @@ SpAbstractPresenter >> validateInto: aValidationReport [
 { #category : 'events' }
 SpAbstractPresenter >> whenBuiltDo: aBlock [
 
-	self announcer 
-		when: SpWidgetBuilt
-		do: aBlock
+	self announcer when: SpWidgetBuilt do: aBlock for: aBlock receiver
 ]
 
 { #category : 'events' }
@@ -548,16 +546,9 @@ SpAbstractPresenter >> withAdapterDo: aValuable [
 ]
 
 { #category : 'private - utilities' }
-SpAbstractPresenter >> withWidgetDo: aValuable [
-	"a convenience method to avoid verify by nil all the time"
-
-	^ self adapter ifNotNil: aValuable
-]
-
-{ #category : 'private - utilities' }
 SpAbstractPresenter >> withWindowDo: aValuable [
 
-	self hasWindow ifFalse: [ ^ self ].
+	self hasWindow ifFalse: [ ^ nil ].
 	"Since Presenter has window, root = window"
-	aValuable value: self root
+	^ aValuable value: self root
 ]
