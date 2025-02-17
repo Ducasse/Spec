@@ -42,14 +42,13 @@ SpWindow >> announceWillClose [
 { #category : 'open/close' }
 SpWindow >> close [ 
 
-	self announceWillClose ifFalse: [ ^ self ].
-	super close.
+	super close
 ]
 
 { #category : 'open/close' }
 SpWindow >> deleteDiscardingChanges [
 
-	self announceWillClose.
+	self announceWillClose ifFalse: [ ^ self ].
 	^ super deleteDiscardingChanges
 ]
 
