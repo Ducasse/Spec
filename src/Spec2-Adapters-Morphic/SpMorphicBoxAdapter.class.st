@@ -30,12 +30,6 @@ SpMorphicBoxAdapter >> add: aPresenter [
 	self add: aPresenter constraints: SpBoxConstraints new
 ]
 
-{ #category : 'adding' }
-SpMorphicBoxAdapter >> add: aPresenter constraints: constraints [
-
-	super add: aPresenter constraints: constraints
-]
-
 { #category : 'private' }
 SpMorphicBoxAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
@@ -214,6 +208,7 @@ SpMorphicBoxAdapter >> newHorizontal [
 			listDirection: #leftToRight;
 			hResizing: #shrinkWrap;
 			width: 0;
+			minWidth: 0; "Otherwise an empty endPanel has a width of 2 pixels due to Morph>>#minWidth."
 			yourself);
 	  yourself
 ]
@@ -231,13 +226,14 @@ SpMorphicBoxAdapter >> newVertical [
 
 	^ (self newPanelWith: self newPanelLayout)
 		listDirection: #topToBottom;
-		addMorphBack: ((startPanel := self newPanel)
+		addMorphBack: ((startPanel := self newPanelWith: SpMorphicBoxChildLayout new)
 			listDirection: #topToBottom;
 			yourself);
-		addMorphBack: ((endPanel := self newPanel)
+		addMorphBack: ((endPanel := self newPanelWith: SpMorphicBoxChildLayout new)
 			listDirection: #topToBottom;
 			vResizing: #shrinkWrap;
 			height: 0;
+			minHeight: 0; "Otherwise an empty endPanel has a height of 2 pixels due to Morph>>#minHeight."
 			yourself);
 		yourself
 ]
@@ -253,13 +249,15 @@ SpMorphicBoxAdapter >> newWrapMorph [
 
 { #category : 'accessing' }
 SpMorphicBoxAdapter >> remove: aPresenter [
+	| morph adapter |
 
-	| morph |
-	morph := aPresenter adapter widget.	
+	(adapter := aPresenter adapter) ifNil: [ ^ self ].
+	
+	adapter unsubscribe.
+	morph := adapter widget.
 	startPanel removeMorph: morph.
 	endPanel removeMorph: morph.
 	self verifyBoxExtent
-	
 ]
 
 { #category : 'accessing' }

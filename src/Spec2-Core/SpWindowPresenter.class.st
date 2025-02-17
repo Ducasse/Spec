@@ -91,6 +91,12 @@ SpWindowPresenter >> aboutTitle [
 	^ self presenter toolName
 ]
 
+{ #category : 'api' }
+SpWindowPresenter >> activate [
+
+	self withAdapterDo: [ :anAdapter | anAdapter activate ]
+]
+
 { #category : 'private - building' }
 SpWindowPresenter >> addPresenterIn: widget withSpecLayout: aSpec [
 	
@@ -231,14 +237,14 @@ SpWindowPresenter >> hasDecorations [
 SpWindowPresenter >> hasMenu [ 
 	"Answer if window has a menu defined"
 	
-	^ self menu notNil
+	^ self menu isNotNil
 ]
 
 { #category : 'testing' }
 SpWindowPresenter >> hasPresenter: aPresenter [
 	"Answer if window includes `aPresenter`"
 
-	^ aPresenter isNotNil and: [aPresenter adapter notNil
+	^ aPresenter isNotNil and: [aPresenter adapter isNotNil
 		and: [ self adapter hasWidget: aPresenter adapter ]]
 ]
 
@@ -246,14 +252,14 @@ SpWindowPresenter >> hasPresenter: aPresenter [
 SpWindowPresenter >> hasStatusBar [
 	"Answer if window has a status bar defined"
 	
-	^ self statusBar notNil
+	^ self statusBar isNotNil
 ]
 
 { #category : 'testing' }
 SpWindowPresenter >> hasToolbar [
 	"Answer if window has a toolbar defined"
 
-	^ self toolbar notNil and: [ self toolbar notEmpty ]
+	^ self toolbar isNotNil and: [ self toolbar notEmpty ]
 ]
 
 { #category : 'api' }
@@ -283,7 +289,10 @@ SpWindowPresenter >> initialPosition [
 { #category : 'api' }
 SpWindowPresenter >> initialPosition: aPoint [
 	"Set initial position of the window. 
-	 `aPoint` is an instance of `Point`, indicating x@y coordinates"
+	 `aPoint` is an instance of `Point`, indicating x@y coordinates
+	 WARNING: Not all backends will support this (for example Gtk lets
+	 the window manager position windows and hence it ignores any positioning 
+	 we set)."
 
 	initialPosition := aPoint
 ]
@@ -434,6 +443,20 @@ SpWindowPresenter >> minimize [
 	"Minimize the window."
 	
 	self withAdapterDo: [ :anAdapter | anAdapter minimize ]
+]
+
+{ #category : 'api' }
+SpWindowPresenter >> moveTo: aPoint [
+	"Moves the window to a specific location. 
+	 `aPoint` is an instance of `Point`, indicating x@y coordinates
+	
+	 To set initial position of a window, use #initialPosition:, not this.
+	 WARNING: Not all backends will support this (for example Gtk lets
+	 the window manager position windows and hence it ignores any positioning 
+	 we set)."
+	
+	self withAdapterPerformOrDefer: [ :anAdapter | anAdapter moveTo: aPoint ]	
+
 ]
 
 { #category : 'notifying' }
@@ -605,7 +628,7 @@ SpWindowPresenter >> triggerOkAction [
 SpWindowPresenter >> updateTitle [
 	"Update the window title"
 
-	self changed: #title: with: { self title }
+	self withAdapterDo: [ :anAdapter | anAdapter title: self title ]
 ]
 
 { #category : 'api - events' }
@@ -670,7 +693,10 @@ SpWindowPresenter >> whenResizingDo: aBlock [
 	"Inform when window is resizing. 
 	 `aBlock` receives one optional argument (an instance of the announcement `SpWindowResizing`)"
 
-	self announcer when: SpWindowResizing do: aBlock for: aBlock receiver
+	self announcer 
+		when: SpWindowResizing 
+		do: aBlock 
+		for: aBlock receiver
 ]
 
 { #category : 'api - events' }
@@ -689,10 +715,11 @@ SpWindowPresenter >> whenWillCloseDo: aBlock [
 	"Inform when window will close, allowing process before the close happen. 
 	 Note that user cannot cancel the close operation using this event. 
 	 `aBlock` receives one optional argument (an instance of the announcement `SpWindowWillClose`)."
-	
-	self announcer 
+
+	self announcer
 		when: SpWindowWillClose
 		do: aBlock
+		for: aBlock receiver
 ]
 
 { #category : 'private' }

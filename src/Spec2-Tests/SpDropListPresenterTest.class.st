@@ -42,6 +42,52 @@ SpDropListPresenterTest >> testEmptyList [
 ]
 
 { #category : 'tests' }
+SpDropListPresenterTest >> testSelectItemAfterOpen [
+
+	presenter items: #( $a $b $c ).
+	presenter selectItem: $c.
+
+	[ 
+		presenter open. 
+		self assert: presenter selectedItem equals: $c.
+		presenter selectItem: $b.
+		self assert: presenter selectedItem equals: $b.
+	] 
+	ensure: [ presenter withWindowDo: #close ]	
+]
+
+{ #category : 'tests' }
+SpDropListPresenterTest >> testSelectionOfObjectsWithSamePrintOn [
+
+	| first second |
+	presenter items: { first := Object new. second := Object new }.
+	presenter selectItem: second.
+
+	[ 
+		presenter open. 
+		self assert: presenter selectedItem equals: second.
+		presenter selectItem: first.
+		self assert: presenter selectedItem equals: first.
+	] 
+	ensure: [ presenter withWindowDo: #close ]	
+]
+
+{ #category : 'tests' }
+SpDropListPresenterTest >> testSelectionOfObjectsWithSamePrintOnBeforeOpen [
+
+	| first second |
+	
+	presenter items: { first := Object new. second := Object new }.
+	presenter selectItem: second.
+	[ 
+		self assert: presenter selectedItem equals: second.
+		presenter selectItem: first.
+		self assert: presenter selectedItem equals: first.
+	] 
+	ensure: [ presenter withWindowDo: #close ]	
+]
+
+{ #category : 'tests' }
 SpDropListPresenterTest >> testSetItemsWithCollectionSmallerThanSelection [
 
 	| changed |

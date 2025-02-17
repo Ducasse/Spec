@@ -4,8 +4,8 @@ I will style and provide completion according to the behaviour being edited.
 
 "
 Class {
-	#name : #SpCodePresenter,
-	#superclass : #SpTextPresenter,
+	#name : 'SpCodePresenter',
+	#superclass : 'SpTextPresenter',
 	#instVars : [
 		'#syntaxHighlight => ObservableSlot',
 		'#smartCharacters => ObservableSlot',
@@ -16,18 +16,21 @@ Class {
 		'#resetBlock',
 		'#environment',
 		'#systemNavigation',
-		'#syntaxHighlightTheme => ObservableSlot'
+		'#syntaxHighlightTheme => ObservableSlot',
+		'#styleScheme'
 	],
-	#category : #'Spec2-Code-Base'
+	#category : 'Spec2-Code-Base',
+	#package : 'Spec2-Code',
+	#tag : 'Base'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 SpCodePresenter class >> adapterName [
 
 	^ #CodeAdapter
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
 
 	aCmCommandsGroup beDisplayedAsGroup.
@@ -35,14 +38,14 @@ SpCodePresenter class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsG
 	aCmCommandsGroup register: (self codeNavigationCommandsGroupWith: presenter)
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
 
 	super buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup.	
 	aCmCommandsGroup register: (self codeAcceptCommandsGroupWith: presenter)
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
 	| commandGroup |
 
@@ -59,7 +62,7 @@ SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
 	^ commandGroup
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter class >> codeNavigationCommandsGroupWith: aPresenter [
 	| group |
 	
@@ -84,7 +87,7 @@ SpCodePresenter class >> codeNavigationCommandsGroupWith: aPresenter [
 	^ group
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 	| group |
 	
@@ -99,21 +102,33 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 	^ group
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 SpCodePresenter class >> documentFactoryMethodSelector [
 
 	^ #newCode
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SpCodePresenter class >> example [
 
 	^ self new
-		  text: 'some method: 42';
-		  open
+		text: '42 factorial';
+		open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
+SpCodePresenter class >> exampleChangingSchemeAndHighlightTheme [
+	
+	"if you are using a dark theme, this will not look different (use 'codeLight' scheme to see
+	 something cool) ;)"
+	^ self new
+		syntaxHighlightTheme: 'Dark';
+		styleScheme: 'codeDark';
+		text: '42 factorial';
+		open
+]
+
+{ #category : 'examples' }
 SpCodePresenter class >> exampleOverridingContextMenu [
 	"This example will show a code presenter, but context menu will be overriden and 
 	 it will show just what is defined in #contextMenu: send"
@@ -127,13 +142,13 @@ SpCodePresenter class >> exampleOverridingContextMenu [
 		open
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SpCodePresenter class >> title [
 
 	^ 'Code'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> allowingContextMenu [
 	"Indicates the default context menu should be shown (this is the default behaviour). 
 	 When allowing the code context menu, visible operations will be collected from  `SpPresenter>>#rootCommandsGroup` and `SpTextPresenter>>#editionCommandsGroup`, and what user 
@@ -142,61 +157,61 @@ SpCodePresenter >> allowingContextMenu [
 	self overrideContextMenu: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> basicInteractionModel: anInteractionModel [
 
 	interactionModel := anInteractionModel
 ]
 
-{ #category : #'api - model' }
+{ #category : 'api - model' }
 SpCodePresenter >> beForBehavior: aBehavior [
 	"used when browsing classes or alike"
 
 	self interactionModel: (SpCodeBehaviorInteractionModel on: aBehavior)
 ]
 
-{ #category : #'api - model' }
+{ #category : 'api - model' }
 SpCodePresenter >> beForMethod: aMethod [
 	"used when browsing methods"
 
 	self interactionModel: (SpCodeMethodInteractionModel on: aMethod)
 ]
 
-{ #category : #'api - model' }
+{ #category : 'api - model' }
 SpCodePresenter >> beForObject: anObject [
 	"Used when inspecting objects"
 
 	self interactionModel: (SpCodeObjectInteractionModel on: anObject)
 ]
 
-{ #category : #'api - model' }
+{ #category : 'api - model' }
 SpCodePresenter >> beForScripting [
 	"Use in playgrounds"
 
 	self interactionModel: SpCodeScriptingInteractionModel new
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> behavior [
 	"Return the class corresponding to the method class of the source code you are editing"
 	
 	^ self interactionModel ifNotNil: [ :im | im behavior ]
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> behavior: aClass [
 	"Set the class corresponding to the method class of the source code you are editing"
 	
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> bindingOf: aString [
 
 	self interactionModel ifNotNil:  [ :im | ^ im bindingOf: aString  ].
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> buildContextKeyBindingsWith: aCategory [
 	| category |
 	
@@ -208,7 +223,7 @@ SpCodePresenter >> buildContextKeyBindingsWith: aCategory [
 	^ category
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> buildContextMenuWith: aValuable [
 	| menuPresenter |
 	
@@ -224,7 +239,7 @@ SpCodePresenter >> buildContextMenuWith: aValuable [
 	^ menuPresenter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> canAddBindingOf: name [
 
 	^ self interactionModel
@@ -232,19 +247,19 @@ SpCodePresenter >> canAddBindingOf: name [
 		  ifNil: [ false ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> clearInteractionModel [
 
 	self interactionModel: SpCodeNullInteractionModel new
 ]
 
-{ #category : #'api - shortcuts' }
+{ #category : 'api - shortcuts' }
 SpCodePresenter >> contextKeyBindings [
 
 	^ self buildContextKeyBindingsWith: super contextKeyBindings
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> contextMenu [
 	"The code presenter context menu is a compound of two menus: 
 		1) the basic interoperation menu (that includes operations like cut&paste but also do it, 
@@ -256,7 +271,7 @@ SpCodePresenter >> contextMenu [
 	^ [ self buildContextMenuWith: super contextMenu ]
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseClass [
 	| result |
 
@@ -272,7 +287,7 @@ SpCodePresenter >> doBrowseClass [
 	self systemNavigation browse: result 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseClassReferences [
 	| result class |
 
@@ -290,7 +305,7 @@ SpCodePresenter >> doBrowseClassReferences [
 		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseHierarchy [
 	| result |
 
@@ -303,7 +318,7 @@ SpCodePresenter >> doBrowseHierarchy [
 	self systemNavigation browseHierarchy: result
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseImplementors [
 	| variableOrClassName variable |
 	
@@ -317,11 +332,11 @@ SpCodePresenter >> doBrowseImplementors [
 		ifFalse: [ self systemNavigation browseAllImplementorsOf: variableOrClassName ]
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseMethodReferences [
 	"Browse references to Variables (Cmd-shift-n)"
-
 	| variableOrClassName variable usingMethods |
+
 	variableOrClassName := self selectedSelector ifNil: [ ^ nil ].
 
 	variable := self lookupEnvironment lookupVar: variableOrClassName.
@@ -335,7 +350,7 @@ SpCodePresenter >> doBrowseMethodReferences [
 		  withMethods: usingMethods
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseMethodsContainingString [
 	
 	self systemNavigation 
@@ -343,7 +358,7 @@ SpCodePresenter >> doBrowseMethodsContainingString [
 		matchCase: false
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseMethodsMatchingStringInsensitive [
 	
 	self systemNavigation 
@@ -351,7 +366,7 @@ SpCodePresenter >> doBrowseMethodsMatchingStringInsensitive [
 		matchCase: false
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseMethodsMatchingStringSensitive [
 	
 	self systemNavigation 
@@ -359,7 +374,7 @@ SpCodePresenter >> doBrowseMethodsMatchingStringSensitive [
 		matchCase: true
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpCodePresenter >> doBrowseSenders [
 	| variableOrClassName variable |
 	
@@ -367,49 +382,49 @@ SpCodePresenter >> doBrowseSenders [
 	variable := self lookupEnvironment lookupVar: variableOrClassName.
 
 	"For global and class variables, sender-of shows intead the using methods"
-	(variable notNil and: [(variable isGlobalVariable or: [variable isClassVariable])]) 
+	(variable isNotNil and: [(variable isGlobalVariable or: [variable isClassVariable])]) 
 		ifTrue: [ self systemNavigation openBrowserFor: variable name withMethods: variable usingMethods  ]
 		ifFalse: [ self systemNavigation browseAllReferencesTo: variableOrClassName  ]
 		
 	
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> doItContext [
 
 	^ self interactionModel ifNotNil: [ :im | im doItContext ]
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> doItContext: anObject [
 
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> doItReceiver [
 	
 	^ self interactionModel ifNotNil: [ :im | im doItReceiver ]
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> doItReceiver: anObject [
 
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> environment [
 
 	^ environment ifNil: [ self class environment ]
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> environment: anEnvironment [
 	"Set system environment to be used in commands"
 	
 	environment := anEnvironment
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> evaluate: aString onCompileError: compileErrorBlock onError: errorBlock [ 
 	"evaluate aString. 
 	 evaluate compileErrorBlock if there are compilation errors. 
@@ -447,14 +462,14 @@ SpCodePresenter >> evaluate: aString onCompileError: compileErrorBlock onError: 
 		errorBlock value: e ]
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> hasBindingOf: aString [
 
 	self interactionModel ifNotNil: [ :im | ^ im hasBindingOf: aString ].
 	^ false
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> hasBindingThatBeginsWith: aString [ 
 	
 	^ self interactionModel
@@ -462,7 +477,7 @@ SpCodePresenter >> hasBindingThatBeginsWith: aString [
 		ifNil: [ false ]
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 SpCodePresenter >> hasEditionContextMenu [
 	"Answer if edition context menu is active. 
 	 Edition context menu is available by default, but it can be disabled by calling `SpTextPresenter>>#withoutEditionContextMenu` or `SpCodePresenter>>#overridingContextMenu`"
@@ -470,37 +485,37 @@ SpCodePresenter >> hasEditionContextMenu [
 	^ super hasEditionContextMenu and: [ overrideContextMenu not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> hasLineNumbers [
 
 	^ lineNumbers
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> hasResetAction [
 
-	^ resetBlock notNil
+	^ resetBlock isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> hasSmartCharacters [
 
 	^ smartCharacters
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> hasSubmitAction [
 
-	^ submitBlock notNil
+	^ submitBlock isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> hasSyntaxHighlight [
 
 	^ syntaxHighlight
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpCodePresenter >> initialize [ 
 
 	super initialize.
@@ -516,21 +531,21 @@ SpCodePresenter >> initialize [
 	self clearInteractionModel
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> insertErrorPopover: aPresenter atIndex: location [
 
 	self selectionInterval: ((location + 1) to: location).
 	self insertPopoverAfterCurrentSelection: aPresenter style: 'error'.  
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> insertPopover: aPresenter atIndex: location [
 
 	self selectionInterval: ((location + 1) to: location).
 	self insertPopoverAfterCurrentSelection: aPresenter
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 
 	self 
@@ -538,7 +553,7 @@ SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 		style: nil
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter style: styleName [
 	"Popups a popover with contents `aPresenter` after current text selection. 
 	 It adds `styleName` to the popover style."
@@ -547,7 +562,7 @@ SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter style: styleNa
 		anAdapter insertPopoverAfterCurrentSelection: aPresenter style: styleName ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 	"Inserts a print-it result popover. 
 	 This is for use of SpCodePrintItCommand"
@@ -559,20 +574,20 @@ SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 		style: 'print'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> interactionModel [
 
 	^ interactionModel
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> interactionModel: anInteractionModel [
 
 	anInteractionModel owner: self.
 	self basicInteractionModel: anInteractionModel
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> isScripting [
 
 	^ self interactionModel 
@@ -580,13 +595,13 @@ SpCodePresenter >> isScripting [
 		ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpCodePresenter >> lineNumbers: aBoolean [
 
 	lineNumbers := aBoolean
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> lookupEnvironment [
 	"when searching for variables, start here"
 	^((interactionModel doItContext
@@ -595,7 +610,7 @@ SpCodePresenter >> lookupEnvironment [
 				ifNil: [ self class environment ] ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpCodePresenter >> needRequestorScope [
 
 	^ self interactionModel
@@ -603,19 +618,19 @@ SpCodePresenter >> needRequestorScope [
 		  ifNil: [ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> newContextMenu [
 	
 	^ self rootCommandsGroup asMenuPresenter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> newContextMenuKeyBindings [
 	
 	^ self rootCommandsGroup asKMCategory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> overrideContextMenu: aBoolean [
 	"This property set the type of menu to use: if #overrideContextMenu is false (the default), 
 	 the contextMenu will include code presenter default entries. If #overrideContextMenu is true, 
@@ -624,7 +639,7 @@ SpCodePresenter >> overrideContextMenu: aBoolean [
 	overrideContextMenu := aBoolean
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> overridingContextMenu [
 	"Indicates the context menu should will be overriden. This disabled the default context menu 
 	 which includes all operations that can be executed in the context of code.
@@ -634,7 +649,7 @@ SpCodePresenter >> overridingContextMenu [
 	self overrideContextMenu: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpCodePresenter >> registerEventsForStyling [
 
 	self whenInteractionModelChangedDo: [ :im |
@@ -642,19 +657,19 @@ SpCodePresenter >> registerEventsForStyling [
 			anAdapter interactionModel: im ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> selectedBehavior [
 
 	^ self behavior
 ]
 
-{ #category : #'private - bindings' }
+{ #category : 'private - bindings' }
 SpCodePresenter >> selectedClassOrMetaClass [
 
 	^ self interactionModel ifNotNil: [ :im | im selectedClassOrMetaClass ]
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> selectedSelector [
 	"If text is selected, extract the selectors from the selected text. If there is no selection, try to extract the selectors under the caret position."
 	| extractor selectedText fullSource |
@@ -679,7 +694,7 @@ SpCodePresenter >> selectedSelector [
 					]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> selectedTextOrLine [
 
 	self selectedText ifNotEmpty: [ :aString | ^ aString ].
@@ -687,19 +702,41 @@ SpCodePresenter >> selectedTextOrLine [
 	^ self selectedText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpCodePresenter >> smartCharacters: aBoolean [
 
 	smartCharacters := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'api' }
+SpCodePresenter >> styleScheme [
+	"The name of the style scheme theme to use (e.g. 'Adwaita', 'Adwaita-dark', 'classic', 
+	 'classic-dark', 'cobalt', 'cobalt-light', 'kate', 'kate-dark', 'oblivion', 'solarized-dark', 
+	 'solarized-light', 'tango'"
+
+	^ styleScheme
+]
+
+{ #category : 'api' }
+SpCodePresenter >> styleScheme: aSymbol [
+ 
+	"The name of the style scheme theme to use (e.g. 'Adwaita', 'Adwaita-dark', 'classic', 
+	 'classic-dark', 'cobalt', 'cobalt-light', 'kate', 'kate-dark', 'oblivion', 'solarized-dark', 
+	 'solarized-light', 'tango'. 
+
+	 Note: In morphic this will be interpreted as a simple style (since you can use a style
+	 to define a scheme)"
+
+	 styleScheme := aSymbol
+]
+
+{ #category : 'private' }
 SpCodePresenter >> syntaxHighlight: aBoolean [
 
 	syntaxHighlight := aBoolean 
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> syntaxHighlightTheme [
 	"The name of the syntax highlight theme to use (e.g. 'Blue', 'Vintage', 'Solarized', 'Tango'). 
 	 If not defined, the component will take the default value from the system."
@@ -707,14 +744,14 @@ SpCodePresenter >> syntaxHighlightTheme [
 	^ syntaxHighlightTheme
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> syntaxHighlightTheme: aSymbol [
 	"The name of the syntax highlight theme to use (e.g. 'Blue', 'Vintage', 'Solarized', 'Tango')"
 
 	syntaxHighlightTheme := aSymbol
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> systemNavigation [
 
 	^ (systemNavigation ifNil: [ super systemNavigation ])
@@ -722,27 +759,27 @@ SpCodePresenter >> systemNavigation [
 		yourself
 ]
 
-{ #category : #'command support' }
+{ #category : 'command support' }
 SpCodePresenter >> systemNavigation: aSystemNavigation [
 
 	systemNavigation := aSystemNavigation
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> triggerResetAction [
 
 	resetBlock ifNil: [ ^ self ].
 	resetBlock value
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> triggerSubmitAction [
 
 	submitBlock ifNil: [ ^ self ].
 	submitBlock value: self text
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> userActionDuring: aBlock [
 	"There are a buch of operations that will all trigger a backend update. A tipical case, 
 	 changing text and interactionModel will trigger the text-changed event 3 times and that 
@@ -762,7 +799,7 @@ SpCodePresenter >> userActionDuring: aBlock [
 	aBlock value
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenInteractionModelChangedDo: aBlock [
 	"Set a block to perform when the behavior class changed"
 	
@@ -771,28 +808,28 @@ SpCodePresenter >> whenInteractionModelChangedDo: aBlock [
 		whenChangedDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenLineNumbersChangedDo: aBlock [
 	"Set a block to perform when the syntax highlight is enabled/disabled"
 
 	self property: #lineNumbers whenChangedDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenResetDo: aBlock [
 
 	resetBlock := aBlock.
 	super whenResetDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenSmartCharactersChangedDo: aBlock [
 	"Set a block to perform when the smart characters is enabled/disabled"
 
 	self property: #smartCharacters whenChangedDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenSubmitDo: aBlock [
 	"This method will add a 'submit' event to the widget. It will react when user 
 	 presses <meta+s> key (this is for historical reasons) and with enter (cr).
@@ -802,51 +839,51 @@ SpCodePresenter >> whenSubmitDo: aBlock [
 	super whenSubmitDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenSyntaxHighlightChangedDo: aBlock [
 	"Set a block to perform when the syntax highlight is enabled/disabled"
 
 	self property: #syntaxHighlight whenChangedDo: aBlock
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 SpCodePresenter >> whenSyntaxHighlightThemeChangedDo: aBlock [
 	"Set a block to perform when the syntax highlight theme is changed"
 
 	self property: #syntaxHighlightTheme whenChangedDo: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withLineNumbers [
 
 	self lineNumbers: true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withSmartCharacters [
 
 	self smartCharacters: true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withSyntaxHighlight [
 
 	self syntaxHighlight: true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withoutLineNumbers [
 
 	self lineNumbers: false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withoutSmartCharacters [
 
 	self smartCharacters: false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpCodePresenter >> withoutSyntaxHighlight [
 
 	self syntaxHighlight: false

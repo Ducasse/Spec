@@ -109,16 +109,6 @@ SpApplication >> adapterBindings [
 	^ self backend adapterBindings
 ]
 
-{ #category : 'ui - dialogs' }
-SpApplication >> alert: aString [
-	"Displays an inform dialog, for more configurable version please use `self application newInform title: ....`."
-
-	^ self newAlert
-		  title: 'Alert';
-		  label: aString;
-		  openModal
-]
-
 { #category : 'accessing - backend' }
 SpApplication >> backend [
 
@@ -148,16 +138,6 @@ SpApplication >> configuration [
 	^ configuration ifNil: [ 
 		self ensureConfiguration.
 		configuration ]
-]
-
-{ #category : 'ui - dialogs' }
-SpApplication >> confirm: aString [
-	"Displays a confirm dialog, for more configurable version please use `self application newConfirm title: ....`."
-
-	^ self newConfirm
-		  title: 'Please confirm';
-		  label: aString;
-		  openModal
 ]
 
 { #category : 'showing' }
@@ -203,7 +183,7 @@ SpApplication >> ensureConfiguration [
 
 	configuration ifNotNil: [ ^ configuration ].
 	self ensureBackend.
-	configuration ifNil: [ configuration := backend newDefaultConfiguration ].
+	configuration ifNil: [ configuration := backend defaultConfigurationFor: self ].
 
 	^ configuration
 ]
@@ -251,16 +231,6 @@ SpApplication >> iconProvider: anIconProvider [
 	iconProvider := anIconProvider
 ]
 
-{ #category : 'ui - dialogs' }
-SpApplication >> inform: aString [
-	"Displays an inform dialog, for more configurable version please use `self application newInform title: ....`."
-
-	^ self newInform
-		  title: 'Alert';
-		  label: aString;
-		  openModal
-]
-
 { #category : 'accessing' }
 SpApplication >> locale [
 
@@ -289,19 +259,8 @@ SpApplication >> newPresenter: aPresenterClass [
 { #category : 'accessing' }
 SpApplication >> notificationCenter [
 	"should be placed in initialize."
-	^ notificationCenter ifNil: [ notificationCenter := SpNotificationCenter new forApplication: self; yourself ]
-]
-
-{ #category : 'ui - dialogs' }
-SpApplication >> notificationClass [ 
-
-	^ SpNotificationItem
-]
-
-{ #category : 'ui - dialogs' }
-SpApplication >> notify: aString [
-
-	self notificationCenter add: (self notificationClass with: aString)
+	^ notificationCenter ifNil: [ 
+		notificationCenter := SpNotificationCenter new forApplication: self; yourself ]
 ]
 
 { #category : 'accessing - properties' }
@@ -372,6 +331,12 @@ SpApplication >> registerWindow: aWindow [
 	self windows add: aWindow
 ]
 
+{ #category : 'accessing - properties' }
+SpApplication >> removeProperty: aName [
+
+	^ self properties removeKey: aName ifAbsent: [ ]
+]
+
 { #category : 'accessing' }
 SpApplication >> reset [ 
 
@@ -384,18 +349,6 @@ SpApplication >> reset [
 SpApplication >> run [ 
 
 	self start
-]
-
-{ #category : 'ui - dialogs' }
-SpApplication >> selectDirectoryTitle: aString [
-
-	^ self backend selectDirectoryTitle: aString
-]
-
-{ #category : 'ui - dialogs' }
-SpApplication >> selectFileTitle: aString [
-
-	^ self backend selectFileTitle: aString
 ]
 
 { #category : 'ui' }

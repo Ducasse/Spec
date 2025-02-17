@@ -22,7 +22,7 @@ SpMorphicButtonAdapter >> action [
 	self showSubMenuIfPresent.
 
 	self widget ifNotNil: [:m | m takeKeyboardFocus ].
-	self model performAction.
+	self model performAction
 ]
 
 { #category : 'protocol' }
@@ -173,6 +173,12 @@ SpMorphicButtonAdapter >> newButton [
 		  action: #action
 		  label: #label
 		  menu: #menu:
+]
+
+{ #category : 'accessing' }
+SpMorphicButtonAdapter >> setAsDefault [
+
+	self widget isDefault: true
 ]
 
 { #category : 'factory' }

@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'innerWidget',
 		'lastExtent',
-		'lastPageSize',
-		'needRecalculatePages'
+		'needRecalculatePages',
+		'lastPageIndex'
 	],
 	#category : 'Spec2-Adapters-Morphic-Layout',
 	#package : 'Spec2-Adapters-Morphic',
@@ -155,33 +155,40 @@ SpMorphicMillerAdapter >> newVertical [
 { #category : 'private' }
 SpMorphicMillerAdapter >> recalculatePageHeights [
 
-	| newHeight widgets height |
+	| newHeight widgets height bottom |
 	height := self widget height.
 	widgets := self childrenWidgets.
 	newHeight := widgets size = 1
 		ifTrue: [ height ]
 		ifFalse: [ height / (layout visiblePages min: widgets size) - (layout spacing / (layout visiblePages min: widgets size)) ].
 		
+	bottom := (widgets size * newHeight) floor.
 	widgets reverseWithIndexDo: [ :each :index |
-		each 
-			top: (index - 1) * newHeight;
-			height: newHeight ]
+		| top |
+		top := ((index - 1) * newHeight) floor.
+		each top: top; height: bottom - top.
+		bottom := top ]
 ]
 
 { #category : 'private' }
 SpMorphicMillerAdapter >> recalculatePageWidths [
+	| newWidth widgets width right |
 
-	| newWidth widgets width |
-	widgets := self childrenWidgets.
+	widgets := self childrenWidgets.	
 	width := self widget width.
 	newWidth := widgets size = 1
 		ifTrue: [ width ]
-		ifFalse: [ (width / (layout visiblePages min: widgets size)) - (layout spacing / (layout visiblePages min: widgets size)) ].
+		ifFalse: [ 
+			| visiblePages |
+			visiblePages := layout visiblePages min: widgets size.
+			(width / visiblePages) - (layout spacing / visiblePages) ].
 		
+	right := (widgets size * newWidth) floor.
 	widgets reverseWithIndexDo: [ :each :index |
-		each 
-			left: (index - 1) * newWidth;
-			width: newWidth ]
+		| left |
+		left := ((index - 1) * newWidth) floor.
+		each left: left; width: right - left.
+		right := left ]
 ]
 
 { #category : 'private' }
@@ -189,24 +196,26 @@ SpMorphicMillerAdapter >> recalculatePages [
 
 	self widget ifNil: [ ^ self ].
 	self childrenWidgets ifEmpty: [ ^ self ].
-	(needRecalculatePages not 
-		and: [ lastExtent = self widget extent 
-		and: [ lastPageSize = self childrenWidgets size ] ]) 
-		ifTrue: [ ^ self ].
 
+	(needRecalculatePages not
+		and: [ lastExtent = self widget extent 
+		and: [ lastPageIndex = self childrenWidgets size ] ]) 
+		ifTrue: [ ^ self ].
+	
 	needRecalculatePages := false.
+
+	layout direction recalculatePages: self.
 	lastExtent := self widget extent.
-	lastPageSize := self childrenWidgets size.
-	layout direction recalculatePages: self
+	lastPageIndex := self childrenWidgets size
 ]
 
 { #category : 'accessing' }
 SpMorphicMillerAdapter >> remove: aPresenter [
 
-	| morph |
-	needRecalculatePages := true.
-	morph := aPresenter adapter widget.	
-	innerWidget removeMorph: morph
+	aPresenter adapter ifNil: [ ^ self ].
+	
+	innerWidget removeMorph: aPresenter adapter widget.
+	needRecalculatePages := true
 ]
 
 { #category : 'accessing' }
@@ -234,10 +243,13 @@ SpMorphicMillerAdapter >> scrollByDeltaPercent: percent [
 { #category : 'private' }
 SpMorphicMillerAdapter >> scrollToShowLastPage [
 
-	self widget defer: [ | size firstMorphIndex |
+	self widget defer: [
+		| size firstMorphIndex |
+
 		size := innerWidget submorphs size.
-		firstMorphIndex := size - self presenter visiblePages + 1. 
-		self widget showMorph: (innerWidget submorphs at: ((firstMorphIndex max: 1) min: size)) ]
+		size > 0 ifTrue: [
+			firstMorphIndex := size - self presenter visiblePages + 1.
+			self widget showMorph: (innerWidget submorphs at: ((firstMorphIndex max: 1) min: size)) ] ]
 ]
 
 { #category : 'accessing' }

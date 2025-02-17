@@ -140,11 +140,9 @@ SpEditableListPresenter >> initialize [
 { #category : 'initialization' }
 SpEditableListPresenter >> initializeDialogWindow: aWindow [
 
-	aWindow 
-		addButton: 'Ok' 
-		do: [ :presenter | 
-			self performOkAction. 
-			presenter close ]
+	aWindow addDefaultButton: 'Ok' do: [ :presenter | 
+		self performOkAction. 
+		presenter close ]
 ]
 
 { #category : 'initialization' }
@@ -159,27 +157,27 @@ SpEditableListPresenter >> initializePresenters [
 	bottomButton := self newButton.
 	addButton
 		addStyle: 'small';
-		icon: (self iconNamed: #addIcon);
+		icon: (self iconNamed: #add);
 		help: 'Add a new item to the list'.
 	removeButton
 		addStyle: 'small';
-		icon: (self iconNamed: #removeIcon);
+		icon: (self iconNamed: #remove);
 		help: 'Remove a item from the list'.
 	upButton
 		addStyle: 'small';
-		icon: (self iconNamed: #upIcon);
+		icon: (self iconNamed: #up);
 		help: 'Move this item up from one element'.
 	downButton
 		addStyle: 'small';
-		icon: (self iconNamed: #downIcon);
+		icon: (self iconNamed: #down);
 		help: 'Move this item down from one element'.
 	topButton
 		addStyle: 'small';
-		icon: (self iconNamed: #topIcon);
+		icon: (self iconNamed: #top);
 		help: 'Move this item on the first position of the list'.
 	bottomButton
 		addStyle: 'small';
-		icon: (self iconNamed: #bottomIcon);
+		icon: (self iconNamed: #bottom);
 		help: 'Move this item on the last position of the list'
 ]
 
