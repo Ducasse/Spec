@@ -101,7 +101,8 @@ Class {
 		'#styles'
 	],
 	#classInstVars : [
-		'#customExtent'
+		'#customExtent',
+		'#setByInteraction'
 	],
 	#category : 'Spec2-Core-Base',
 	#package : 'Spec2-Core',
@@ -203,8 +204,24 @@ SpPresenter class >> preferredExtent [
 
 { #category : 'accessing' }
 SpPresenter class >> preferredExtent: aPoint [
+	"Since the system raises one notification of resize for every size changes, 
+	we cannot distinguish between a extent set by the system and a resize by the users. So we use this trick to get more context and deduce a user one."
 	
-	customExtent := aPoint
+	self setByInteraction ifTrue: [ 
+		Transcript show: '.';cr.
+		customExtent := aPoint ]
+]
+
+{ #category : 'accessing' }
+SpPresenter class >> setByInteraction [
+
+	^ setByInteraction ifNil: [ setByInteraction := false ]
+]
+
+{ #category : 'accessing' }
+SpPresenter class >> setByInteraction: aBoolean [
+
+	setByInteraction := aBoolean
 ]
 
 { #category : 'specs' }
@@ -667,7 +684,13 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 		your code
 		
 	"
+	
+	"Since the system raises one notification of resize for every size changes, 
+	we cannot distinguish between a extent set by the system and a resize by the users.
+	so we use this trick to get more context and deduce a user one."
 
+	self class setByInteraction: true.
+	
 	aWindowPresenter
 		title: self windowTitle;
 		initialExtent: self class preferredExtent;
