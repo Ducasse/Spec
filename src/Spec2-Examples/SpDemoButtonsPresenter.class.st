@@ -20,12 +20,6 @@ Class {
 	#tag : 'Demo-Buttons'
 }
 
-{ #category : 'initialization' }
-SpDemoButtonsPresenter >> connectPresenters [
-
-	"buttonWithShortcut action: [ self inform: 'button with shortcut pressed' ]"																																														
-]
-
 { #category : 'layout' }
 SpDemoButtonsPresenter >> defaultLayout [
 
